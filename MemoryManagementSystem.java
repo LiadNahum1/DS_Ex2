@@ -5,13 +5,28 @@
 import java.util.Arrays;
 
 
+
 public class MemoryManagementSystem{
 	public String[] secondaryMemory;
 	private boolean useLRU;
-	// YOU CAN ADD MORE FIELDS HERE 
+	private MemoryQueue queue;
 	 
 	public MemoryManagementSystem(int mainMemorySize, int secondaryMemorySize, boolean useLRU) {
-		// ADD YOUR CODE HERE
+		this.useLRU = useLRU;
+		this.secondaryMemory = new String[secondaryMemorySize];
+		if (useLRU)
+			queue = new LRUQueue(mainMemorySize, secondaryMemorySize);
+		else
+			queue = new FIFOQueue(mainMemorySize, secondaryMemorySize);
+		
+		for (int i = 0; i < secondaryMemorySize; i++)
+		{
+			secondaryMemory[i] = "";
+		}
+		for(int i = 0; i < mainMemorySize; i++)
+		{
+			
+		}
 	}
 
 	@Override
@@ -21,6 +36,7 @@ public class MemoryManagementSystem{
 	
 	public String read(int index) {
 		// ADD YOUR CODE HERE
+		
 		return null; 
 	}
 
