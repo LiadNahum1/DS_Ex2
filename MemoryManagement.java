@@ -1,6 +1,6 @@
 /**
  * 
- * @author ADD YOUR NAME & ID
+ * @author lishay and liad 207912734
  */
 
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 public class MemoryManagement {
 
 	public static void main(String[] args) {
-		
+		System.out.print("hii");
 		boolean useLru = args[0].matches("1");
 		String inputFilename = args[1];
 		String outputFilename = args[2];
@@ -32,13 +32,13 @@ public class MemoryManagement {
 			e.printStackTrace();
 		}
 		manageMemory(inFile, outFile, memory);
-				
+
 	}
 
 	public static void manageMemory(File inFile,
 			File outFile, MemoryManagementSystem memory) {
 		try {
-			
+
 			FileReader ifr = new FileReader(inFile);
 			BufferedReader ibr = new BufferedReader(ifr);
 
