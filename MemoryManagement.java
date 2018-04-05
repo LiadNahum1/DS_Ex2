@@ -16,7 +16,6 @@ import java.util.StringTokenizer;
 public class MemoryManagement {
 
 	public static void main(String[] args) {
-		System.out.print("hii");
 		boolean useLru = args[0].matches("1");
 		String inputFilename = args[1];
 		String outputFilename = args[2];
@@ -38,7 +37,7 @@ public class MemoryManagement {
 	public static void manageMemory(File inFile,
 			File outFile, MemoryManagementSystem memory) {
 		try {
-
+			System.out.print("hellow");
 			FileReader ifr = new FileReader(inFile);
 			BufferedReader ibr = new BufferedReader(ifr);
 
