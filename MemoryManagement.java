@@ -18,6 +18,7 @@ public class MemoryManagement {
 	public static void main(String[] args) {
 		
 		boolean useLru = args[0].matches("1");
+		System.out.println(useLru);
 		String inputFilename = args[1];
 		String outputFilename = args[2];
 		int mainMemorySize = Integer.parseInt(args[3]);
@@ -31,6 +32,7 @@ public class MemoryManagement {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		manageMemory(inFile, outFile, memory);
 				
 	}
@@ -58,12 +60,14 @@ public class MemoryManagement {
 							memory.write(index, c);
 						}
 						if (token.equals("print")) {
+							System.out.println(memory.toString());
 							writeToFile(outFile, memory.toString());
 						}
 					}
+					
 				}
 			}
-
+			
 			ibr.close();
 			ifr.close();
 		}
