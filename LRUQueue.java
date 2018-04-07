@@ -44,7 +44,9 @@ public class LRUQueue  implements MemoryQueue {
 
 	@Override
 	public void deque() {
-		secondMemoryContent[leastUse] = mainMemory[leastUse].readPage(); //Updates the second memory on the changes of the page
+		secondMemoryContent[mainMemory[leastUse].getKey()] = mainMemory[leastUse].readPage();
+		secondMemory[mainMemory[leastUse].getKey()] = -1;
+		//Updates the second memory on the changes of the page
 	}
 	@Override
 	public void usePage(Page page) {
