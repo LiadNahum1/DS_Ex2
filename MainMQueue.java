@@ -7,11 +7,11 @@ public class MainMQueue  {
 	private Page newest;
 	private boolean useLRU;
 
-	public MainMQueue(int mainMemorySize, int secondMemorySize, String[]secondaryMemory, boolean useLRU)
+	public MainMQueue(int mainMemorySize, String[]secondaryMemory, boolean useLRU)
 	{
 		this.useLRU = useLRU;
 		this.pages = new Page[mainMemorySize];
-		this.keys = new int[secondMemorySize];
+		this.keys = new int[secondaryMemory.length];
 		for(int i=0; i<pages.length; i = i+1) {
 			this.pages[i] = new Page(i, secondaryMemory[i]);
 		}
@@ -66,6 +66,7 @@ public class MainMQueue  {
 	{
 		Page pToReplace = null;
 		if(useLru) {
+			
 			//LRU
 			pToReplace = this.oldest;
 			int index = this.keys[this.oldest.getKey()]; //index in pages array
@@ -75,39 +76,37 @@ public class MainMQueue  {
 			this.oldest = this.oldest.getNext();
 			
 			page.setPrev(this.newest);
+			page.setNext(null);
 			this.newest.setNext(page);
 			this.newest = page;
 		}
 		else {
 			//FIFO
-			/*if(head-1 >= 0 && this.pages[head-1] == null) {
-				this.pages[head-1] = page;
-				this.keys[page.getKey()] = head-1;
-			}
-			else {*/
-				//need to replace pages
-				pToReplace = this.pages[this.head];
-				this.pages[this.head] = page;
-				this.keys[pToReplace.getKey()] = -1;
-				this.keys[page.getKey()] = this.head;
-				if(this.head + 1 == this.pages.length)
-					this.head = 0;
-				else
-					this.head = this.head + 1;
+			//need to replace pages
+			pToReplace = this.pages[this.head];
+			this.pages[this.head] = page;
+			this.keys[pToReplace.getKey()] = -1;
+			this.keys[page.getKey()] = this.head;
+			if(this.head + 1 == this.pages.length)
+				this.head = 0;
+			else
+				this.head = this.head + 1;
 		}
 		return pToReplace;
 	}
 	
 	public void hadRef(Page page) {
-		if(page.equals(this.oldest)) {
-			this.oldest = this.oldest.getNext();
+		if(this.useLRU) {
+			if(page.equals(this.oldest)) {
+				this.oldest = this.oldest.getNext();
+			}
+			else {
+				page.getPrev().setNext(page.getNext());
+			}
+			this.newest.setNext(page);
+			page.setNext(null);
+			this.newest = page; 
 		}
-		if(page.getPrev()!=null) {
-			page.getPrev().setNext(page.getNext());
-		}
-		this.newest.setNext(page);
-		page.setNext(null);
-		this.newest = page; 
 	}
 	
 	//return Page according to key if it exists and null otherwise

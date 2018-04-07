@@ -3,12 +3,11 @@
  * @author ADD YOUR NAME & ID
  */
 import java.util.Arrays;
-import java.util.Queue;
 
 public class MemoryManagementSystem{
 	public String[] secondaryMemory;
 	private boolean useLRU;
-	public MainMQueue mainMemory; 
+	public MainQueue mainMemory; 
 	// YOU CAN ADD MORE FIELDS HERE 
 	 
 	public MemoryManagementSystem(int mainMemorySize, int secondaryMemorySize, boolean useLRU) {
@@ -17,44 +16,48 @@ public class MemoryManagementSystem{
 		for(int i=0; i<secondaryMemorySize; i = i+1) {
 			this.secondaryMemory[i]= "";
 		}
-		this.mainMemory = new MainMQueue(mainMemorySize, secondaryMemorySize, this.secondaryMemory, useLRU);
+		if(useLRU)
+			this.mainMemory = new LRUQueue(mainMemorySize, this.secondaryMemory);
+		else
+			this.mainMemory = new FIFOQueue(mainMemorySize, this.secondaryMemory);
 	}
 
+	public MainQueue m() {
+		return this.mainMemory;
+	}
 	@Override
 	public String toString() {
 		return "secondaryMemory=" + Arrays.toString(secondaryMemory);
 	}
 	
 	public String read(int index) {
-		Page page = this.mainMemory.isExist(index);
+		Page page = this.mainMemory.getPage(index);
 		if(page==null) {
 			//need to pull it from secondary memory
 			Page newPage = new Page(index, this.secondaryMemory[index]);
-			Page noPlaceInMain = this.mainMemory.enqueue(newPage, this.useLRU);
+			Page noPlaceInMain = this.mainMemory.enqueue(newPage);
 			this.secondaryMemory[noPlaceInMain.getKey()] = noPlaceInMain.getInfo();
-			page = this.mainMemory.isExist(index);
+			page = this.mainMemory.getPage(index);
 		}
 		else {
-			this.mainMemory.hadRef(page);
+			this.mainMemory.usePage(page);
 		}
 		return page.getInfo();
-		// ADD YOUR CODE HERE
 	}
 
 	public void write(int index, char c) {
-		Page page = this.mainMemory.isExist(index);
+		Page page = this.mainMemory.getPage(index);
 		if(page==null) {
 		//need to pull it from secondary memory
 			Page newPage = new Page(index, this.secondaryMemory[index]);
-			Page noPlaceInMain = this.mainMemory.enqueue(newPage, this.useLRU);
+			Page noPlaceInMain = this.mainMemory.enqueue(newPage);
 			this.secondaryMemory[noPlaceInMain.getKey()] = noPlaceInMain.getInfo();
-			page = this.mainMemory.isExist(index);
+			page = this.mainMemory.getPage(index);
 		}
 		else {
-			this.mainMemory.hadRef(page);
+			this.mainMemory.usePage(page);
 		}
-		page.setInfo(c);
 		
-		// ADD YOUR CODE HERE		
+		page.setInfo(c);	
 	}
 }

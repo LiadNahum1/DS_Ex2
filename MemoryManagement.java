@@ -17,7 +17,7 @@ public class MemoryManagement {
 
 	public static void main(String[] args) {
 		
-		boolean useLru = args[0].matches("1");
+		boolean useLru = !args[0].matches("1");
 		System.out.println(useLru);
 		String inputFilename = args[1];
 		String outputFilename = args[2];
@@ -58,11 +58,13 @@ public class MemoryManagement {
 							int index = Integer.parseInt(st.nextToken().trim());
 							char c = st.nextToken().trim().charAt(0);
 							memory.write(index, c);
+							
 						}
 						if (token.equals("print")) {
 							System.out.println(memory.toString());
 							writeToFile(outFile, memory.toString());
 						}
+						
 					}
 					
 				}

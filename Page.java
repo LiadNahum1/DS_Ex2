@@ -44,6 +44,12 @@ public class Page {
 	public String toString() {
 		return "Key: " + getKey() + "Info: " + getInfo();
 	}
+	
+	public boolean equals(Page other) {
+		if(getKey() == other.getKey())
+			return true;
+		return false;
+	}
 }
 	// ADD YOUR CODE HERE
 
