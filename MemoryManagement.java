@@ -1,6 +1,7 @@
 /**
  * 
- * @author ADD YOUR NAME & ID
+ * @author Liad Nahum 318841285
+ * 		   Lishay Aben Sour 207912734
  */
 
 import java.io.BufferedReader;
@@ -17,7 +18,7 @@ public class MemoryManagement {
 
 	public static void main(String[] args) {
 		
-		boolean useLru = !args[0].matches("1");
+		boolean useLru = args[0].matches("1");
 		System.out.println(useLru);
 		String inputFilename = args[1];
 		String outputFilename = args[2];
@@ -61,6 +62,7 @@ public class MemoryManagement {
 							
 						}
 						if (token.equals("print")) {
+							//check output 
 							System.out.println(memory.toString());
 							writeToFile(outFile, memory.toString());
 						}
