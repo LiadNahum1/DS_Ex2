@@ -12,7 +12,7 @@ public class MemoryManagementSystem{
 	private MemoryQueue queue;
 
 	public MemoryManagementSystem(int mainMemorySize, int secondaryMemorySize, boolean useLRU) {
-		this.useLRU = useLRU;
+		this.setUseLRU(useLRU);
 		this.secondaryMemory = new String[secondaryMemorySize];
 		for (int i = 0; i < secondaryMemorySize; i++)
 		{
@@ -54,6 +54,14 @@ public class MemoryManagementSystem{
 			queue.usePage(page);
 			page.writeToPage(c);
 		}
+	}
+
+	public boolean isUseLRU() {
+		return useLRU;
+	}
+
+	public void setUseLRU(boolean useLRU) {
+		this.useLRU = useLRU;
 	}
 }
 
