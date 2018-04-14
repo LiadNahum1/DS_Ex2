@@ -52,15 +52,17 @@ public class LRUQueue implements MainQueue{
 	
 	/*The method removes the page that is the least recently used
 	 *The methods update the pages array, the keys array and the oldest pointer*/
-	public void dequeue() {
+	public Page dequeue() {
 		if(!isEmpty()) {
-			Page temp = this.oldest;
+			Page pToRemove = this.oldest;
 			int keyOldest = this.oldest.getKey();
 			int indexOldest = this.keys[keyOldest];
 			this.keys[keyOldest] = -1;
 			this.pages[indexOldest] = null; 
-			this.oldest = temp.getNext();
+			this.oldest = pToRemove.getNext();
+			return pToRemove;
 		}
+		return null;
 	}
 		
 	/*The method gets new page and adds it to the queue. 

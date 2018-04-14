@@ -41,7 +41,7 @@ public class FIFOQueue implements MainQueue{
 	}
 	/*The method removes the page that got first into the queue
 	 *The methods update the pages array, the keys array and the head pointer*/
-	public void dequeue() {
+	public Page dequeue() {
 		if(!isEmpty())
 		{
 			Page pToRemove = this.pages[this.head];
@@ -51,7 +51,9 @@ public class FIFOQueue implements MainQueue{
 				this.head = 0;
 			else
 				this.head = this.head + 1;
+			return pToRemove;
 		}
+		return null;
 	}
 	
 	/*The method gets new page and adds it to the queue. 
