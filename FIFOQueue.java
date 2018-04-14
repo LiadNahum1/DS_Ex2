@@ -10,6 +10,7 @@ public class FIFOQueue implements MainQueue{
 	private int [] keys;  //each index indicates a page's key, and the value is the page index in pages array
 	private int head;    //pointer to the head of the queue 
 	
+	
 	public FIFOQueue(int mainMemorySize, String[]secondaryMemory)
 	{
 		this.pages = new Page[mainMemorySize];
@@ -35,17 +36,22 @@ public class FIFOQueue implements MainQueue{
 		//pointer to the head of the queue
 		this.head = 0; 
 	}
-	
+	public boolean isEmpty() {
+		return this.pages[this.head]==null; 
+	}
 	/*The method removes the page that got first into the queue
 	 *The methods update the pages array, the keys array and the head pointer*/
 	public void dequeue() {
-		Page pToRemove = getPage(this.head);
-		this.pages[this.head] = null;
-		this.keys[pToRemove.getKey()] = -1; 
-		if(this.head + 1 == this.pages.length)
-			this.head = 0;
-		else
-			this.head = this.head + 1;
+		if(!isEmpty())
+		{
+			Page pToRemove = this.pages[this.head];
+			this.pages[this.head] = null;
+			this.keys[pToRemove.getKey()] = -1; 
+			if(this.head + 1 == this.pages.length)
+				this.head = 0;
+			else
+				this.head = this.head + 1;
+		}
 	}
 	
 	/*The method gets new page and adds it to the queue. 
@@ -73,12 +79,13 @@ public class FIFOQueue implements MainQueue{
 		if(key < this.keys.length && this.keys[key]!=-1) {
 			return this.pages[this.keys[key]];
 		}
+		
 		return null; 
 	}
 	
 	/*The methods returns the Page that is at the head of the queue*/
 	public Page getPageToReplace() {
-		return getPage(this.head);
+		return this.pages[this.head];
 	}
 	
 	
